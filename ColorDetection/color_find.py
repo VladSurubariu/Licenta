@@ -1,23 +1,16 @@
 import cv2
-import sys
 import numpy as np
-
-def nothing(x):
-    pass
-
-# Load in image
-# image = cv2.imread('1.png')
 
 # Create a window
 cv2.namedWindow('image')
 
 # create trackbars for color change
-cv2.createTrackbar('HMin','image',0,255,nothing) # Hue is from 0-179 for Opencv
-cv2.createTrackbar('SMin','image',0,255,nothing)
-cv2.createTrackbar('VMin','image',0,255,nothing)
-cv2.createTrackbar('HMax','image',0,179,nothing)
-cv2.createTrackbar('SMax','image',0,255,nothing)
-cv2.createTrackbar('VMax','image',0,255,nothing)
+cv2.createTrackbar('HMin', 'image', 0, 255, "")  # Hue is from 0-179 for Opencv
+cv2.createTrackbar('SMin', 'image', 0, 255, "")
+cv2.createTrackbar('VMin', 'image', 0, 255, "")
+cv2.createTrackbar('HMax', 'image', 0, 179, "")
+cv2.createTrackbar('SMax', 'image', 0, 255, "")
+cv2.createTrackbar('VMax', 'image', 0, 255, "")
 
 # Set default value for MAX HSV trackbars.
 cv2.setTrackbarPos('HMax', 'image', 179)
@@ -31,19 +24,18 @@ phMin = psMin = pvMin = phMax = psMax = pvMax = 0
 
 wait_time = 33
 
-cap=cv2.VideoCapture(0)
-while(1):
-    ret,image=cap.read()
-    image=cv2.flip(image,1)
-    output = image
+cap = cv2.VideoCapture(0)
+while True:
+    ret, image = cap.read()
+    image = cv2.flip(image, 1)
     # get current positions of all trackbars
-    hMin = cv2.getTrackbarPos('HMin','image')
-    sMin = cv2.getTrackbarPos('SMin','image')
-    vMin = cv2.getTrackbarPos('VMin','image')
+    hMin = cv2.getTrackbarPos('HMin', 'image')
+    sMin = cv2.getTrackbarPos('SMin', 'image')
+    vMin = cv2.getTrackbarPos('VMin', 'image')
 
-    hMax = cv2.getTrackbarPos('HMax','image')
-    sMax = cv2.getTrackbarPos('SMax','image')
-    vMax = cv2.getTrackbarPos('VMax','image')
+    hMax = cv2.getTrackbarPos('HMax', 'image')
+    sMax = cv2.getTrackbarPos('SMax', 'image')
+    vMax = cv2.getTrackbarPos('VMax', 'image')
 
     # Set minimum and max HSV values to display
     lower = np.array([hMin, sMin, vMin])
@@ -52,11 +44,11 @@ while(1):
     # Create HSV Image and threshold into a range.
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower, upper)
-    output = cv2.bitwise_and(image,image, mask= mask)
+    output = cv2.bitwise_and(image, image, mask=mask)
 
     # Print if there is a change in HSV value
-    if( (phMin != hMin) | (psMin != sMin) | (pvMin != vMin) | (phMax != hMax) | (psMax != sMax) | (pvMax != vMax) ):
-        print("[%d,%d,%d],[%d,%d,%d]" % (hMin , sMin , vMin, hMax, sMax , vMax))
+    if (phMin != hMin) | (psMin != sMin) | (pvMin != vMin) | (phMax != hMax) | (psMax != sMax) | (pvMax != vMax):
+        print("[%d,%d,%d],[%d,%d,%d]" % (hMin, sMin, vMin, hMax, sMax, vMax))
         phMin = hMin
         psMin = sMin
         pvMin = vMin
@@ -65,7 +57,7 @@ while(1):
         pvMax = vMax
 
     # Display output image
-    cv2.imshow('image',output)
+    cv2.imshow('image', output)
 
     # Wait longer to prevent freeze for videos.
     if cv2.waitKey(wait_time) & 0xFF == 27:
