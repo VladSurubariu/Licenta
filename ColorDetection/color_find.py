@@ -1,16 +1,19 @@
 import cv2
 import numpy as np
 
+def nothing():
+    pass
+
 # Create a window
 cv2.namedWindow('image')
 
 # create trackbars for color change
-cv2.createTrackbar('HMin', 'image', 0, 255, "")  # Hue is from 0-179 for Opencv
-cv2.createTrackbar('SMin', 'image', 0, 255, "")
-cv2.createTrackbar('VMin', 'image', 0, 255, "")
-cv2.createTrackbar('HMax', 'image', 0, 179, "")
-cv2.createTrackbar('SMax', 'image', 0, 255, "")
-cv2.createTrackbar('VMax', 'image', 0, 255, "")
+cv2.createTrackbar('HMin', 'image', 0, 255, nothing)  # Hue is from 0-179 for Opencv
+cv2.createTrackbar('SMin', 'image', 0, 255, nothing)
+cv2.createTrackbar('VMin', 'image', 0, 255, nothing)
+cv2.createTrackbar('HMax', 'image', 0, 179, nothing)
+cv2.createTrackbar('SMax', 'image', 0, 255, nothing)
+cv2.createTrackbar('VMax', 'image', 0, 255, nothing)
 
 # Set default value for MAX HSV trackbars.
 cv2.setTrackbarPos('HMax', 'image', 179)
