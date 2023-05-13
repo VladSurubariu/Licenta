@@ -142,25 +142,39 @@ def detect_multiple_colors():
         a21_center_pixel = hsv[a21_center[1], a21_center[0]]
         a22_center_pixel = hsv[a22_center[1], a22_center[0]]
 
-        # use color dectection in a certain area of the video source
-        h_value = a11_center_pixel[0]
-        s_value = a11_center_pixel[1]
-        v_value = a11_center_pixel[2]
+
+
+
+        centers = np.array([[a00_center_pixel, a01_center_pixel, a02_center_pixel],
+                             [a10_center_pixel, a11_center_pixel, a12_center_pixel],
+                             [a20_center_pixel, a21_center_pixel, a22_center_pixel]])
         
-        if  h_value <= 6 :
-            print("red") 
-        elif 8 <= h_value <=11:
-            print("orange")
-        elif 32 <= h_value <= 40:
-            print("yellow")
-        elif 59 <= h_value <= 67:
-            print("green")
-        elif s_value < 50:
-            print("white")
-        elif 100 <= h_value <=115:
-            print("blue")
-        else:
-            print(a11_center_pixel)
+
+        centers_i, centers_j, _ = centers.shape
+        
+        for i in range(centers_i):
+            for j in range(centers_j):
+                # use color dectection in a certain area of the video source
+                h_value = centers[i][j][0]
+                s_value = centers[i][j][1]
+                v_value = centers[i][j][2]
+                
+                if  h_value <= 6 :
+                    cube_matrix[i][j] = "R" 
+                elif 7 <= h_value <=11:
+                    cube_matrix[i][j] = "O"
+                elif 32 <= h_value <= 40:
+                    cube_matrix[i][j] = "Y"
+                elif 59 <= h_value <= 72:
+                    cube_matrix[i][j] = "G"
+                elif s_value < 50:
+                    cube_matrix[i][j] = "W"
+                elif 100 <= h_value <=115:
+                    cube_matrix[i][j] = "B"
+                #else:
+                   #print(a11_center_pixel)
+        
+        print(cube_matrix) 
             
         img = cv.circle(img, (a11_center[0], a11_center[1]), 5, (255,0,0),3)
         
