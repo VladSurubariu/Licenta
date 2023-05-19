@@ -83,12 +83,19 @@ public class MainActivity extends AppCompatActivity {
             PyObject obj = pyObject.callAttr("main", imageString);
 
             String str = obj.toString();
+            //String image_str = str.substring(0, str.length()-8);
+            //String substr = str.substring(str.length()-7,str.length());
 
-            byte arraydata[] = android.util.Base64.decode(str,Base64.DEFAULT);
+            int index_of_matrix = str.indexOf("matrix:");
+            String substr1 = str.substring(0, index_of_matrix);
+            String substr2 = str.substring(index_of_matrix);
+
+
+            byte[] arraydata = android.util.Base64.decode(substr1,Base64.DEFAULT);
             Bitmap bmp = BitmapFactory.decodeByteArray(arraydata, 0, arraydata.length);
 
             source_image.setImageBitmap(bmp);
-            //textView.setText(str);
+            textView.setText(substr2);
 
         }
     }
