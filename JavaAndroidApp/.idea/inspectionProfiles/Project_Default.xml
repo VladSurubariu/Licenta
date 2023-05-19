@@ -12,6 +12,9 @@
           <option value="base64" />
           <option value="io" />
           <option value="python.script.str" />
+          <option value="python.script.int" />
+          <option value="python.script.type" />
+          <option value="python.script.*" />
         </list>
       </option>
     </inspection_tool>

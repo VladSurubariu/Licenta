@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         if( requestCode == 101)
         {
             Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
             imageString = getStringImage(bitmap);
 
             if (!Python.isStarted()){
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
             Python py = Python.getInstance();
             PyObject pyObject = py.getModule("script");
-            PyObject obj = pyObject.callAttr("main", imageString);
+            PyObject obj = pyObject.callAttr("main", imageString, width, height);
 
             String str = obj.toString();
             //String image_str = str.substring(0, str.length()-8);
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap bmp = BitmapFactory.decodeByteArray(arraydata, 0, arraydata.length);
 
             source_image.setImageBitmap(bmp);
-            textView.setText(substr2);
+            textView.setText(encoded_matrix_values_string);
 
         }
     }
