@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
             //String substr = str.substring(str.length()-7,str.length());
 
             int index_of_matrix = str.indexOf("matrix:");
-            String substr1 = str.substring(0, index_of_matrix);
-            String substr2 = str.substring(index_of_matrix);
+            String encoded_image_string = str.substring(0, index_of_matrix);
+            String encoded_matrix_values_string = str.substring(index_of_matrix);
 
 
-            byte[] arraydata = android.util.Base64.decode(substr1,Base64.DEFAULT);
+            byte[] arraydata = android.util.Base64.decode(encoded_image_string,Base64.DEFAULT);
             Bitmap bmp = BitmapFactory.decodeByteArray(arraydata, 0, arraydata.length);
 
             source_image.setImageBitmap(bmp);
