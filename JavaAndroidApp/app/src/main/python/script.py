@@ -4,7 +4,7 @@ import base64
 import io
 import PIL.Image as Image
 
-drawing_tile_dimension = 20
+drawing_tile_dimension = 30
 cube_matrix = [["","",""],
                ["","",""],
                ["","",""]]
@@ -94,12 +94,7 @@ def main(data, width, height):
     img = cv2.imdecode(np_data, cv2.IMREAD_UNCHANGED)
     #img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-
-    # draw the placeholder for the Rubik's cube
-    #draw_cube_placeholder(img,cx, cy)
-    
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    #img_rgb = cv2.circle(img_rgb,(round(width/2), round(height/2)) , 5, (255,0,0),2)
     #calculate the pixels coords
     cx = round(width/2)
     cy = round(height/2)
@@ -145,18 +140,23 @@ def main(data, width, height):
                 #else:
                    #print(a11_center_pixel)
 
+    # first column
+    img = cv2.circle(img, (a00_center[0], a00_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a01_center[0], a01_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a02_center[0], a02_center[1]), 5, (0, 0, 0), 2)
 
+    ## second column
+    img = cv2.circle(img, (a10_center[0], a10_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a11_center[0], a11_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a12_center[0], a12_center[1]), 5, (0, 0, 0), 2)
 
-
-
-
-
-
-
+    # third column
+    img = cv2.circle(img, (a20_center[0], a20_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a21_center[0], a21_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a22_center[0], a22_center[1]), 5, (0, 0, 0), 2)
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     #img_rgb = cv2.circle(img_rgb,a11_center[0], a11_center[1] , 5, (255,0,0),2)
-
 
     pil_im = Image.fromarray(img_rgb)
 
