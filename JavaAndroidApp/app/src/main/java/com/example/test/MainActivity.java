@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             PyObject obj = pyObject.callAttr("main", imageString);
 
             String str = obj.toString();
+
             byte arraydata[] = android.util.Base64.decode(str,Base64.DEFAULT);
             Bitmap bmp = BitmapFactory.decodeByteArray(arraydata, 0, arraydata.length);
 
