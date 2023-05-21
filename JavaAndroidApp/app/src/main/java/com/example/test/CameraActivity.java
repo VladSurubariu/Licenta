@@ -18,10 +18,14 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -32,10 +36,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CameraActivity extends AppCompatActivity {
-    ImageButton capture;
+    ImageButton capture, center_tile_placeholder;
     private PreviewView previewView;
     int cameraFacing = CameraSelector.LENS_FACING_FRONT;
     ExecutorService cameraExecutor;
+    DisplayMetrics displayMetrics = new DisplayMetrics();
+    int tile_width_pixels = 200;
+    int camera_height_pixels = 300;
 
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
@@ -52,7 +59,18 @@ public class CameraActivity extends AppCompatActivity {
 
         previewView = findViewById(R.id.cameraPreview);
         capture = findViewById(R.id.capture);
+        center_tile_placeholder = findViewById(R.id.center_tile_placeholder);
         cameraExecutor = Executors.newSingleThreadExecutor();
+
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        //RelativeLayout.LayoutParams center_tile_placeholderLayoutParams = (RelativeLayout.LayoutParams) center_tile_placeholder.getLayoutParams();
+        //center_tile_placeholderLayoutParams.height = displayMetrics.heightPixels/2;
+        //center_tile_placeholderLayoutParams.width = displayMetrics.widthPixels/2;
+
+        RelativeLayout.LayoutParams center_tile_placeholderRelativeParams = (RelativeLayout.LayoutParams) center_tile_placeholder.getLayoutParams();
+        center_tile_placeholderRelativeParams.setMargins(displayMetrics.widthPixels/2 - tile_width_pixels/2, (displayMetrics.heightPixels - camera_height_pixels)/2 - tile_width_pixels/2 - 100, 0, 0);
+
 
         if (ContextCompat.checkSelfPermission(CameraActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             activityResultLauncher.launch(android.Manifest.permission.CAMERA);
@@ -142,4 +160,6 @@ public class CameraActivity extends AppCompatActivity {
         }
         return AspectRatio.RATIO_16_9;
     }
+
+
 }
