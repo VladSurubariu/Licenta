@@ -1,113 +1,143 @@
 package com.example.test;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.camera.core.AspectRatio;
+import androidx.camera.core.Camera;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.icu.util.Output;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Base64;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.chaquo.python.PyObject;
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
+import com.google.common.util.concurrent.ListenableFuture;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
+    ImageButton capture;
+    private PreviewView previewView;
+    int cameraFacing = CameraSelector.LENS_FACING_FRONT;
+    ExecutorService cameraExecutor;
 
-    private Button button;
-    private ImageView source_image;
-    private TextView textView;
-    private String imageString = "";
-
+    private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+        @Override
+        public void onActivityResult(Boolean result) {
+            if (result) {
+                startCamera(cameraFacing);
+            }
+        }
+    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button)findViewById(R.id.button);
-        textView = (TextView)findViewById(R.id.textview);
-        source_image = (ImageView)findViewById(R.id.imageView2);
+        previewView = findViewById(R.id.cameraPreview);
+        capture = findViewById(R.id.capture);
+        cameraExecutor = Executors.newSingleThreadExecutor();
 
-        ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA},
-                PackageManager.PERMISSION_GRANTED);
-
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 101);
-            }
-        });
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if( requestCode == 101)
-        {
-            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
-            imageString = getStringImage(bitmap);
-
-            if (!Python.isStarted()){
-                Python.start(new AndroidPlatform(this));
-            }
-            Python py = Python.getInstance();
-            PyObject pyObject = py.getModule("script");
-            PyObject obj = pyObject.callAttr("main", imageString, width, height);
-
-            String str = obj.toString();
-            //String image_str = str.substring(0, str.length()-8);
-            //String substr = str.substring(str.length()-7,str.length());
-
-            int index_of_matrix = str.indexOf("matrix:");
-            String encoded_image_string = str.substring(0, index_of_matrix);
-            String encoded_matrix_values_string = str.substring(index_of_matrix);
-
-
-            byte[] arraydata = android.util.Base64.decode(encoded_image_string,Base64.DEFAULT);
-            Bitmap bmp = BitmapFactory.decodeByteArray(arraydata, 0, arraydata.length);
-
-            source_image.setImageBitmap(bmp);
-            textView.setText(encoded_matrix_values_string);
-
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            activityResultLauncher.launch(Manifest.permission.CAMERA);
+        } else {
+            startCamera(cameraFacing);
         }
     }
 
-    public String getStringImage(Bitmap bitmap)
+    public void startCamera(int cameraFacing) {
+        int aspectRatio = aspectRatio(previewView.getWidth(), previewView.getHeight());
+        ListenableFuture<ProcessCameraProvider> listenableFuture = ProcessCameraProvider.getInstance(this);
+
+        listenableFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = (ProcessCameraProvider) listenableFuture.get();
+
+                Preview preview = new Preview.Builder().setTargetAspectRatio(aspectRatio).build();
+
+                ImageCapture imageCapture = new ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                        .setTargetRotation(getWindowManager().getDefaultDisplay().getRotation()).build();
+
+                CameraSelector cameraSelector = new CameraSelector.Builder()
+                        .requireLensFacing(cameraFacing).build();
+
+                cameraProvider.unbindAll();
+
+                Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture);
+
+                capture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            activityResultLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        } else {
+                            takePicture(imageCapture);
+                        }
+                    }
+                });
+
+                preview.setSurfaceProvider(previewView.getSurfaceProvider());
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, ContextCompat.getMainExecutor(this));
+    }
+
+    public void takePicture(ImageCapture imageCapture)
     {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+        try {
+            imageCapture.takePicture(cameraExecutor, new ImageCapture.OnImageCapturedCallback() {
+                @Override
+                public void onCaptureSuccess(@NonNull ImageProxy image) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    startCamera(cameraFacing);
+                }
+
+                @Override
+                public void onError(@NonNull ImageCaptureException exception) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "Failed to save: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    startCamera(cameraFacing);
+                }
+            });
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Log.d("logger: ", "Try catch: " + e.getMessage());
+        }
+    }
+
+    private int aspectRatio(int width, int height) {
+        double previewRatio = (double) Math.max(width, height) / Math.min(width, height);
+        if (Math.abs(previewRatio - 4.0 / 3.0) <= Math.abs(previewRatio - 16.0 / 9.0)) {
+            return AspectRatio.RATIO_4_3;
+        }
+        return AspectRatio.RATIO_16_9;
     }
 }
