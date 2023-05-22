@@ -15,4 +15,11 @@
         android:layout_marginBottom="40sp"
         android:id="@+id/buttonSwitch"
         android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:layout_width="300sp"
+        android:layout_height="300sp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/imageview"/>
 </RelativeLayout>

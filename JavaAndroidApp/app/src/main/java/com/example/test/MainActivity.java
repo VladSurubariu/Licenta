@@ -7,10 +7,11 @@ import android.graphics.Camera;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button buttonSwitch;
+    public Button buttonSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

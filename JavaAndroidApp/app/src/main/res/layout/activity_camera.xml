@@ -30,23 +30,93 @@
         android:layout_marginLeft="0px"
         android:background="@drawable/cube"
         android:scaleType="centerCrop"
-        android:id="@+id/center_tile_placeholder"/>
+        android:id="@+id/middle_center_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/middle_left_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/middle_right_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/bottom_right_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/bottom_center_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/bottom_left_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/top_center_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/top_left_tile_placeholder"/>
+
+    <ImageButton
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="0px"
+        android:layout_marginLeft="0px"
+        android:background="@drawable/cube"
+        android:scaleType="centerCrop"
+        android:id="@+id/top_right_tile_placeholder"/>
 
 
-    <!--<ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="284dp"
-        android:layout_height="354dp"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="183dp"
+        android:layout_height="171dp"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -4,7 +4,7 @@ import base64
 import io
 import PIL.Image as Image
 
-drawing_tile_dimension = 30
+drawing_tile_dimension = 375
 cube_matrix = [["","",""],
                ["","",""],
                ["","",""]]
@@ -125,20 +125,20 @@ def main(data, width, height):
                 s_value = centers[i][j][1]
                 v_value = centers[i][j][2]
                 
-                if  h_value <= 6 :
+                if  h_value <= 4 :
                     cube_matrix[i][j] = "R" 
-                elif 7 <= h_value <=11:
+                elif h_value <=25:
                     cube_matrix[i][j] = "O"
-                elif 32 <= h_value <= 40:
+                elif h_value <= 40:
                     cube_matrix[i][j] = "Y"
-                elif 59 <= h_value <= 72:
+                elif h_value <= 75:
                     cube_matrix[i][j] = "G"
                 elif s_value < 50:
                     cube_matrix[i][j] = "W"
-                elif 100 <= h_value <=115:
+                elif h_value <=115:
                     cube_matrix[i][j] = "B"
-                #else:
-                   #print(a11_center_pixel)
+                else:
+                    cube_matrix[i][j] = "R"
 
     # first column
     img = cv2.circle(img, (a00_center[0], a00_center[1]), 5, (0, 0, 0), 2)
