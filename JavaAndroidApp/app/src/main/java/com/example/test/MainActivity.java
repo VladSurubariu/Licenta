@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
     public Button buttonSwitch;
     public TextView textView;
 
-    public int matrix[][][] = new int[6][3][3];
+    public char matrix[][][] = new char[6][3][3];
+
+    int face_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 String tiles_colors = data.getStringExtra("tiles_colors");
                 char[][] tiles_colors_char = convertToMatrix(tiles_colors);
-                textView.setText(convertCharArrayToString(tiles_colors_char));
+                matrix[face_id] = tiles_colors_char;
+                textView.setText(convertCharArrayToString(matrix[face_id]));
+
+                face_id++;
 
             }
         }
