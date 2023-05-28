@@ -22,4 +22,17 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:id="@+id/imageview"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="286dp"
+        android:layout_height="88dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="66dp"
+        android:layout_marginTop="101dp"
+        android:width="100sp"
+        android:height="50sp"
+        android:text="aaaaa"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 </RelativeLayout>

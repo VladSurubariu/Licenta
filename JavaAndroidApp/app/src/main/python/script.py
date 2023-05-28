@@ -9,7 +9,6 @@ cube_matrix = [["","",""],
                ["","",""],
                ["","",""]]
 
-
 def calculate_placeholder_cube_coords(cx, cy):
     
     a00_left = (cx - round(drawing_tile_dimension * 1.5), cy - round(drawing_tile_dimension * 1.5))
@@ -68,33 +67,14 @@ def get_tiles_centers(cx, cy):
     
     return a00_center, a01_center, a02_center, a10_center, a11_center, a12_center, a20_center, a21_center, a22_center
 
-
-def draw_cube_placeholder(image,cx, cy):
-
-    a00, a01, a02, a10, a11, a12, a20, a21, a22 = calculate_placeholder_cube_coords(cx, cy)
-    # first column
-    cv2.rectangle(image, a00[0], a00[1], (0, 0, 0), 2)
-    cv2.rectangle(image, a10[0], a10[1], (0, 0, 0), 2)
-    cv2.rectangle(image, a20[0], a20[1], (0, 0, 0), 2)
-
-    # second column
-    cv2.rectangle(image, a01[0], a01[1], (0, 0, 0), 2)
-    cv2.rectangle(image, a11[0], a11[1], (0, 0, 0), 2)
-    cv2.rectangle(image, a21[0], a21[1], (0, 0, 0), 2)
-
-    # third column
-    cv2.rectangle(image, a02[0], a02[1], (0, 0, 0), 2)
-    cv2.rectangle(image, a12[0], a12[1], (0, 0, 0), 2)
-    cv2.rectangle(image, a22[0], a22[1], (0, 0, 0), 2)
-
 def main(data, width, height):
 
     decoded_data = base64.b64decode(data)
     np_data = np.fromstring(decoded_data, np.uint8)
     img = cv2.imdecode(np_data, cv2.IMREAD_UNCHANGED)
-    #img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
     #calculate the pixels coords
     cx = round(width/2)
     cy = round(height/2)
@@ -123,46 +103,27 @@ def main(data, width, height):
                 # use color detection in a certain area of the video source
                 h_value = centers[i][j][0]
                 s_value = centers[i][j][1]
-                v_value = centers[i][j][2]
-                
+
                 if  h_value <= 4 :
-                    cube_matrix[i][j] = "R" 
+                    cube_matrix[i][j] = "R"
+                elif s_value < 50:
+                    cube_matrix[i][j] = "W"
                 elif h_value <=25:
                     cube_matrix[i][j] = "O"
                 elif h_value <= 40:
                     cube_matrix[i][j] = "Y"
                 elif h_value <= 75:
                     cube_matrix[i][j] = "G"
-                elif s_value < 50:
-                    cube_matrix[i][j] = "W"
                 elif h_value <=115:
                     cube_matrix[i][j] = "B"
                 else:
                     cube_matrix[i][j] = "R"
 
-    # first column
-    img = cv2.circle(img, (a00_center[0], a00_center[1]), 5, (0, 0, 0), 2)
-    img = cv2.circle(img, (a01_center[0], a01_center[1]), 5, (0, 0, 0), 2)
-    img = cv2.circle(img, (a02_center[0], a02_center[1]), 5, (0, 0, 0), 2)
-
-    ## second column
-    img = cv2.circle(img, (a10_center[0], a10_center[1]), 5, (0, 0, 0), 2)
-    img = cv2.circle(img, (a11_center[0], a11_center[1]), 5, (0, 0, 0), 2)
-    img = cv2.circle(img, (a12_center[0], a12_center[1]), 5, (0, 0, 0), 2)
-
-    # third column
-    img = cv2.circle(img, (a20_center[0], a20_center[1]), 5, (0, 0, 0), 2)
-    img = cv2.circle(img, (a21_center[0], a21_center[1]), 5, (0, 0, 0), 2)
-    img = cv2.circle(img, (a22_center[0], a22_center[1]), 5, (0, 0, 0), 2)
-
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    #img_rgb = cv2.circle(img_rgb,a11_center[0], a11_center[1] , 5, (255,0,0),2)
-
     pil_im = Image.fromarray(img_rgb)
 
     buff = io.BytesIO()
     pil_im.save(buff, format="PNG")
     img_str = base64.b64encode(buff.getvalue())
-    #return img_str
 
     return "" + str(img_str, 'utf-8') + "matrix:" + str(cube_matrix)

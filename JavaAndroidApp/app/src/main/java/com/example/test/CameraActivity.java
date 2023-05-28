@@ -186,32 +186,35 @@ public class CameraActivity extends AppCompatActivity {
 
                     Bitmap bitmap = imageProxyToBitmap(imageProxy);
                     bitmap = RotateBitmap(bitmap, 90);
+                    Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, 750, 1000, 1500, 1500);
+
 
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight() - camera_height_pixels - 150;
-//
+
                     String image_string = getStringImage(bitmap);
-//
+
                     if (!Python.isStarted()){
                         Python.start(new AndroidPlatform(CameraActivity.this));
                     }
-//
+
                     Python py = Python.getInstance();
                     PyObject pyObject = py.getModule("script");
                     PyObject obj = pyObject.callAttr("main", image_string, width, height);
-//
+
                     String str = obj.toString();
-////
+
                     int index_of_matrix = str.indexOf("matrix:");
                     String encoded_image_string = str.substring(0, index_of_matrix);
                     String matrix_values_string = str.substring(index_of_matrix);
-////
+
                     byte[] arraydata = android.util.Base64.decode(encoded_image_string,Base64.DEFAULT);
                     Bitmap bmp = BitmapFactory.decodeByteArray(arraydata, 0, arraydata.length);
-//
-//
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    //startActivity(intent);
+
+                    Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+                    intent.putExtra("tiles_colors", matrix_values_string);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
 
                 @Override
