@@ -275,7 +275,7 @@ public class CameraActivity extends AppCompatActivity {
 
     public String getStringImage(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 50, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
