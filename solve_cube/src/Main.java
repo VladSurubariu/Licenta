@@ -6,8 +6,7 @@ public class Main {
     public static void main(String[] args) {
         matrix = initialiseMatrix();
         char[][] face = matrix[0];
-        //moveRow(face, 2, false);
-        moveFace(face, false);
+        moveRowHorizontal(face, 1, false);
     }
 
     //The orientation is ORANGE FACE in front of the user, WHITE FACE above and YELLOW FACE bellow
@@ -15,29 +14,29 @@ public class Main {
 
         char c_matrix[][][] = new char[6][3][3];
 
-        c_matrix[0][0] = new char[]{'R', 'O', 'W'};
-        c_matrix[0][1] = new char[]{'R', 'O', 'W'};
-        c_matrix[0][2] = new char[]{'R', 'O', 'W'};
+        c_matrix[0][0] = new char[]{'Y', 'B', 'Y'};
+        c_matrix[0][1] = new char[]{'Y', 'O', 'Y'};
+        c_matrix[0][2] = new char[]{'O', 'G', 'O'};
 
-        c_matrix[1][0] = new char[]{'G', 'G', 'G'};
-        c_matrix[1][1] = new char[]{'G', 'G', 'G'};
-        c_matrix[1][2] = new char[]{'G', 'G', 'G'};
+        c_matrix[1][0] = new char[]{'O', 'G', 'O'};
+        c_matrix[1][1] = new char[]{'O', 'G', 'O'};
+        c_matrix[1][2] = new char[]{'W', 'G', 'W'};
 
-        c_matrix[2][0] = new char[]{'R', 'R', 'R'};
-        c_matrix[2][1] = new char[]{'R', 'R', 'R'};
-        c_matrix[2][2] = new char[]{'R', 'R', 'R'};
+        c_matrix[2][0] = new char[]{'W', 'G', 'W'};
+        c_matrix[2][1] = new char[]{'W', 'R', 'W'};
+        c_matrix[2][2] = new char[]{'R', 'B', 'R'};
 
-        c_matrix[3][0] = new char[]{'B', 'B', 'B'};
-        c_matrix[3][1] = new char[]{'B', 'B', 'B'};
-        c_matrix[3][2] = new char[]{'B', 'B', 'B'};
+        c_matrix[3][0] = new char[]{'R', 'B', 'R'};
+        c_matrix[3][1] = new char[]{'R', 'B', 'R'};
+        c_matrix[3][2] = new char[]{'Y', 'B', 'Y'};
 
-        c_matrix[4][0] = new char[]{'W', 'W', 'W'};
-        c_matrix[4][1] = new char[]{'W', 'W', 'W'};
-        c_matrix[4][2] = new char[]{'W', 'W', 'W'};
+        c_matrix[4][0] = new char[]{'B', 'W', 'B'};
+        c_matrix[4][1] = new char[]{'O', 'W', 'O'};
+        c_matrix[4][2] = new char[]{'B', 'W', 'B'};
 
-        c_matrix[5][0] = new char[]{'Y', 'Y', 'Y'};
+        c_matrix[5][0] = new char[]{'G', 'R', 'G'};
         c_matrix[5][1] = new char[]{'Y', 'Y', 'Y'};
-        c_matrix[5][2] = new char[]{'Y', 'Y', 'Y'};
+        c_matrix[5][2] = new char[]{'G', 'R', 'G'};
 
         return c_matrix;
     }
@@ -93,24 +92,45 @@ public class Main {
         }
     }
 
-    public static void moveRow(char face[][], int id_row, boolean left){
+    public static void moveFaceHorizontal(char face[][], boolean left){
+
+        char[] column1 = getColumn(face, 0);
+        char[] column2 = getColumn(face, 2);
+
+        char[][] face_copy;
+
+        if(left){
+            face_copy = convertRowToColumn(face, 0,0, left);
+            face_copy = convertRowToColumn(face_copy, 2, 2, left);
+            face_copy[0][1] = column2[1];
+            face_copy[2][1] = column1[1];
+        }
+        else{
+            face_copy = convertRowToColumn(face, 2,0, left);
+            face_copy = convertRowToColumn(face_copy, 0, 2, left);
+            face_copy[0][1] = column1[1];
+            face_copy[2][1] = column2[1];
+        }
+        System.out.println(face_copy);
+    }
+
+    public static void moveRowHorizontal(char face[][], int id_row, boolean left){
 
         int position_in_order = getPositionInOrder(getMiddleTile(face));
 
         int target_position;
 
         if(position_in_order >= 4){
-            moveFace(face, left);
+            moveFaceHorizontal(face, left);
         } else if (id_row == 1) {
             if(left){
-                moveRow(face, 0, false);
-                moveRow(face, 2, false);
+                moveRowHorizontal(face, 0, false);
+                moveRowHorizontal(face, 2, false);
             }
             else{
-                moveRow(face, 0, true);
-                moveRow(face, 2, true);
+                moveRowHorizontal(face, 0, true);
+                moveRowHorizontal(face, 2, true);
             }
-
 
         } else{
             char[] copy_row;
@@ -132,29 +152,12 @@ public class Main {
             System.out.println(matrix);
         }
 
-        if(id_row != 1){
-            moveFace(face, left);
+        if(id_row == 0){
+            moveFaceHorizontal(matrix[4], left);
+        } else if (id_row == 2) {
+            moveFaceHorizontal(matrix[5], left);
         }
     }
 
-    public static void moveFace(char face[][], boolean left){
 
-        char[] column1 = getColumn(face, 0);
-        char[] column2 = getColumn(face, 2);
-
-        char[][] face_copy;
-
-        face_copy = convertRowToColumn(face, 0,0, left);
-        face_copy = convertRowToColumn(face_copy, 2, 2, left);
-
-        if(left){
-            face_copy[0][1] = column2[1];
-            face_copy[2][1] = column1[1];
-        }
-        else{
-            face_copy[0][1] = column1[1];
-            face_copy[2][1] = column2[1];
-        }
-        System.out.println(face_copy);
-    }
 }
