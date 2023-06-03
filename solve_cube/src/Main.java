@@ -1,18 +1,20 @@
 import java.util.Arrays;
 
+import static java.lang.Math.abs;
+
 public class Main {
 
     public static char[][][] matrix = new char[6][3][3];
     public static String tiles_order = "OGRBWY";
 
     public static void main(String[] args) {
-        matrix = initialiseMatrix();
+        matrix = initialiseMatrix2();
         char[][] face = matrix[3];
         //moveRowVertical(face, 2, true);
-        moveRowHorizontal(matrix[4], 2, false); // works
+        //moveRowHorizontal(matrix[4], 2, false); // works
+        moveRowHorizontalUpperFace(matrix[4], 1, true );
+        System.out.println(matrix.toString());
 
-
-        System.out.println(Arrays.deepToString(matrix));
     }
 
     //The orientation is ORANGE FACE in front of the user, WHITE FACE above and YELLOW FACE bellow
@@ -104,7 +106,6 @@ public class Main {
     }
 
     public static char[][] convertRowToColumn(char[][] face, char[] row, int columnID,  boolean leftToRight){
-        // TODO: use rows and columns instead of rowID and columnID or find a way to clone the face
 
         char[][] face_copy = copyFace(face);
         char[] row_copy = row.clone();
@@ -246,7 +247,6 @@ public class Main {
                 copy_row = matrix[target_position][id_row];
                 matrix[target_position][id_row] = copy_row_interchange;
             }
-            System.out.println(Arrays.deepToString(matrix));
         }
 
         if(id_row == 0){
@@ -331,29 +331,64 @@ public class Main {
             }
 
         } else{
-            char[] copy_row;
-            //TODO
+            char[] copy_column;
+
             target_position = getTargetPositionUpperFacesMove(position_in_order, left);
 
-            copy_row = matrix[target_position][id_row];
-
-            matrix[target_position][id_row] = face[id_row];
-
-            for(int i = 0; i < 3; i++){
-                position_in_order = getPositionInOrder(getMiddleTile(matrix[target_position]));
-                target_position = getTargetPositionUpperFacesMove(position_in_order, left);
-
-                char[] copy_row_interchange = copy_row;
-                copy_row = matrix[target_position][id_row];
-                matrix[target_position][id_row] = copy_row_interchange;
+            if(left){
+                copy_column = getColumn(matrix[target_position], abs(2-id_row));
+                matrix[target_position] = convertRowToColumn(matrix[target_position], face[abs(2-id_row)], abs(2-id_row), true);
             }
-            System.out.println(Arrays.deepToString(matrix));
+            else {
+                copy_column = getColumn(matrix[target_position], id_row);
+                matrix[target_position] = convertRowToColumn(matrix[target_position], face[abs(2-id_row)], id_row, false);
+            }
+
+
+            position_in_order = getPositionInOrder(getMiddleTile(matrix[target_position]));
+            target_position = getTargetPositionUpperFacesMove(position_in_order, left);
+
+            char[] copy_interchange = copy_column;
+            copy_column = matrix[target_position][id_row];
+            matrix[target_position][id_row] = copy_interchange;
+
+            position_in_order = getPositionInOrder(getMiddleTile(matrix[target_position]));
+            target_position = getTargetPositionUpperFacesMove(position_in_order, left);
+
+            if(left){
+                copy_interchange = copy_column;
+                copy_column = getColumn(matrix[target_position], id_row);
+                matrix[target_position] = convertRowToColumn(matrix[target_position], copy_interchange, id_row, true);
+            }
+            else{
+                copy_interchange = copy_column;
+                copy_column = getColumn(matrix[target_position], abs(2-id_row));
+                matrix[target_position] = convertRowToColumn(matrix[target_position], copy_interchange, abs(2-id_row), false);
+            }
+
+
+            position_in_order = getPositionInOrder(getMiddleTile(matrix[target_position]));
+            target_position = getTargetPositionUpperFacesMove(position_in_order, left);
+
+            copy_interchange = copy_column;
+
+
+            if(left){
+                copy_column = matrix[target_position][abs(id_row-2)];
+                matrix[target_position][abs(id_row-2)] = copy_interchange;
+            }
+            else {
+                copy_column = matrix[target_position][abs(id_row-2)];
+                for(int i=0; i<3;i++){
+                    matrix[target_position][abs(id_row-2)][i] = copy_interchange[2-i];
+                }
+            }
         }
 
         if(id_row == 0){
-            matrix[4] = moveFaceForRow(matrix[4], !left);
+            matrix[0] = moveFaceForRow(matrix[0], left);
         } else if (id_row == 2) {
-            matrix[5] = moveFaceForRow(matrix[5], left);
+            matrix[2] = moveFaceForRow(matrix[2], !left);
         }
     }
 }
