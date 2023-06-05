@@ -51,29 +51,29 @@ public class Main {
 
         char[][][] c_matrix = new char[6][3][3];
 
-        c_matrix[0][0] = new char[]{'Y', 'Y', 'G'};
-        c_matrix[0][1] = new char[]{'O', 'O', 'G'};
-        c_matrix[0][2] = new char[]{'O', 'B', 'Y'};
+        c_matrix[0][0] = new char[]{'G', 'G', 'O'};
+        c_matrix[0][1] = new char[]{'W', 'O', 'O'};
+        c_matrix[0][2] = new char[]{'O', 'G', 'G'};
 
-        c_matrix[1][0] = new char[]{'W', 'Y', 'O'};
-        c_matrix[1][1] = new char[]{'R', 'G', 'G'};
-        c_matrix[1][2] = new char[]{'B', 'O', 'R'};
+        c_matrix[1][0] = new char[]{'B', 'W', 'R'};
+        c_matrix[1][1] = new char[]{'W', 'G', 'Y'};
+        c_matrix[1][2] = new char[]{'W', 'O', 'W'};
 
-        c_matrix[2][0] = new char[]{'W', 'Y', 'B'};
-        c_matrix[2][1] = new char[]{'O', 'R', 'B'};
-        c_matrix[2][2] = new char[]{'G', 'G', 'W'};
+        c_matrix[2][0] = new char[]{'Y', 'G', 'Y'};
+        c_matrix[2][1] = new char[]{'R', 'R', 'Y'};
+        c_matrix[2][2] = new char[]{'B', 'Y', 'G'};
 
-        c_matrix[3][0] = new char[]{'R', 'R', 'G'};
-        c_matrix[3][1] = new char[]{'R', 'B', 'B'};
-        c_matrix[3][2] = new char[]{'B', 'Y', 'Y'};
+        c_matrix[3][0] = new char[]{'R', 'R', 'Y'};
+        c_matrix[3][1] = new char[]{'B', 'B', 'G'};
+        c_matrix[3][2] = new char[]{'O', 'R', 'W'};
 
-        c_matrix[4][0] = new char[]{'Y', 'G', 'B'};
-        c_matrix[4][1] = new char[]{'W', 'W', 'R'};
-        c_matrix[4][2] = new char[]{'R', 'O', 'O'};
+        c_matrix[4][0] = new char[]{'G', 'Y', 'B'};
+        c_matrix[4][1] = new char[]{'B', 'W', 'B'};
+        c_matrix[4][2] = new char[]{'O', 'R', 'Y'};
 
-        c_matrix[5][0] = new char[]{'G', 'W', 'O'};
-        c_matrix[5][1] = new char[]{'B', 'Y', 'W'};
-        c_matrix[5][2] = new char[]{'R', 'W', 'W'};
+        c_matrix[5][0] = new char[]{'B', 'O', 'R'};
+        c_matrix[5][1] = new char[]{'W', 'Y', 'B'};
+        c_matrix[5][2] = new char[]{'W', 'O', 'R'};
 
         return c_matrix;
     }
@@ -350,8 +350,15 @@ public class Main {
             target_position = getTargetPositionUpperFacesMove(position_in_order, left);
 
             char[] copy_interchange = copy_column;
-            copy_column = matrix[target_position][id_row];
-            matrix[target_position][id_row] = copy_interchange;
+            copy_column = matrix[target_position][id_row].clone();
+
+            if(left) {
+                matrix[target_position][id_row] = copy_interchange;
+            } else {
+                for(int i=0; i<3; i++){
+                    matrix[target_position][id_row][i] = copy_interchange[2-i];
+                }
+            }
 
             position_in_order = getPositionInOrder(getMiddleTile(matrix[target_position]));
             target_position = getTargetPositionUpperFacesMove(position_in_order, left);
@@ -420,20 +427,21 @@ public class Main {
 
         char[][] bottom_face;
         char secondary_color_target_middle = 'W';
-        int[] white_piece_on_bottom_coord = new int[2];
+        int[] white_piece_on_face = new int[2];
 
         while(!checkWhiteCross()){
             bottom_face = matrix[5];
-            white_piece_on_bottom_coord = searchForSidePiece(bottom_face, 'W');
-            if(white_piece_on_bottom_coord[0] != 1000 && white_piece_on_bottom_coord[1]!=1000){
-                if(white_piece_on_bottom_coord[0] == 1){
-                    if(white_piece_on_bottom_coord[1] == 0){
+            white_piece_on_face = searchForSidePiece(bottom_face, 'W');
+
+            if(white_piece_on_face[0] != 1000 && white_piece_on_face[1]!=1000){
+                if(white_piece_on_face[0] == 1){
+                    if(white_piece_on_face[1] == 0){
                         secondary_color_target_middle = 'B';
-                    } else if (white_piece_on_bottom_coord[1] == 2) {
+                    } else if (white_piece_on_face[1] == 2) {
                         secondary_color_target_middle = 'G';
                     }
                 }
-                else if(white_piece_on_bottom_coord[0] == 0){
+                else if(white_piece_on_face[0] == 0){
                     secondary_color_target_middle = 'O';
                 }
                 else {
@@ -447,6 +455,10 @@ public class Main {
                     moveRowHorizontal(matrix[0], 2, true);
                 }
                 else if (getTargetPosition(getPositionInOrder(secondary_color_target_middle), false) == getPositionInOrder(secondary_color_target)){
+                    moveRowHorizontal(matrix[0], 2, false);
+                }
+                else{
+                    moveRowHorizontal(matrix[0], 2, false);
                     moveRowHorizontal(matrix[0], 2, false);
                 }
 
@@ -468,19 +480,154 @@ public class Main {
                 }
 
             }
+            else{
+                for(int i=0; i<4; i++){
+                    char middle_tile = getMiddleTile(matrix[i]);
+                    white_piece_on_face = searchForSidePiece(matrix[i], 'W');
+                    if(white_piece_on_face[0] != 1000 && white_piece_on_face[1] != 1000){
+                        char origin_middle_color = getMiddleTile(matrix[i]);
+                        char white_piece_on_face_side_color = 'X';
+
+                        if(white_piece_on_face[0] == 0){
+                            if(origin_middle_color == 'B'){
+                                white_piece_on_face_side_color = matrix[4][1][0];
+                            } else if (origin_middle_color == 'O') {
+                                white_piece_on_face_side_color = matrix[4][2][1];
+                            } else if (origin_middle_color == 'G') {
+                                white_piece_on_face_side_color = matrix[4][1][2];
+                            } else if (origin_middle_color == 'R') {
+                                white_piece_on_face_side_color = matrix[4][0][1];
+                            }
+
+                            if(white_piece_on_face_side_color == origin_middle_color){ // the pieces are reversed
+                                if(white_piece_on_face_side_color == 'O'){
+                                    moveRowHorizontalUpperFace(matrix[4], 2, false);
+                                    moveRowHorizontal(matrix[0], 0, false);
+                                    moveRowVertical(matrix[0], 2, true);
+                                    moveRowHorizontal(matrix[0], 0, true);
+
+                                } else if (white_piece_on_face_side_color == 'R') {
+                                    moveRowHorizontalUpperFace(matrix[4], 0, true);
+                                    moveRowHorizontal(matrix[0], 0, false);
+                                    moveRowVertical(matrix[0], 0, false);
+                                    moveRowHorizontal(matrix[0], 0, true);
+                                } else if (white_piece_on_face_side_color == 'B') {
+                                    moveRowVertical(matrix[0], 0, false );
+                                    moveRowHorizontal(matrix[0], 0, false);
+                                    moveRowHorizontalUpperFace(matrix[4], 2, false);
+                                    moveRowHorizontal(matrix[0], 0, true);
+                                } else if (white_piece_on_face_side_color == 'G') {
+                                    moveRowVertical(matrix[0], 2, true );
+                                    moveRowHorizontal(matrix[0], 0, false);
+                                    moveRowHorizontalUpperFace(matrix[4], 0, true);
+                                    moveRowHorizontal(matrix[0], 0, true);
+                                }
+                            }
+                            else{
+                                int left_face_positionInOrder = getTargetPosition(getPositionInOrder(origin_middle_color), true);
+                                if (left_face_positionInOrder == getPositionInOrder(white_piece_on_face_side_color)){
+                                    moveRowHorizontal(matrix[0], 0, true);
+                                }
+                                else{
+                                    left_face_positionInOrder = getTargetPosition(getPositionInOrder(origin_middle_color), false);
+                                    if (left_face_positionInOrder == getPositionInOrder(white_piece_on_face_side_color)){
+                                        moveRowHorizontal(matrix[0], 0, false);
+                                    }
+                                    else{
+                                        moveRowHorizontal(matrix[0], 0, false);
+                                        moveRowHorizontal(matrix[0], 0, false);
+                                    }
+                                }
+                            }
+                            System.out.println(matrix);
+                        }
+                        else if (white_piece_on_face[0] == 1){
+                            if(middle_tile == 'O'){
+                                if (white_piece_on_face[1] == 0) {
+                                    moveRowVertical(matrix[0], 0, false);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowVertical(matrix[0], 0, true);
+                                } else {
+                                    moveRowVertical(matrix[0], 2, false);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowVertical(matrix[0], 2, true);
+                                }
+                            } else if (middle_tile == 'R') {
+                                if (white_piece_on_face[1] == 0){
+                                    moveRowVertical(matrix[0], 2, true);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowVertical(matrix[0], 2, false);
+                                } else {
+                                    moveRowVertical(matrix[0], 0, true);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowVertical(matrix[0], 0, false);
+                                }
+                            } else if (middle_tile == 'B') {
+                                if (white_piece_on_face[1] == 0){
+                                    moveRowHorizontalUpperFace(matrix[4], 0, true);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowHorizontalUpperFace(matrix[4], 0, false);
+                                } else {
+                                    moveRowHorizontalUpperFace(matrix[4], 2, true);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowHorizontalUpperFace(matrix[4], 2, false);
+                                }
+                            } else if (middle_tile == 'G') {
+                                if (white_piece_on_face[1] == 0){
+                                    moveRowHorizontalUpperFace(matrix[4], 2, false);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowHorizontalUpperFace(matrix[4], 2, true);
+                                } else {
+                                    moveRowHorizontalUpperFace(matrix[4], 0, false);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowHorizontalUpperFace(matrix[4], 0, true);
+                                }
+                            }
+                        }
+                        else if(white_piece_on_face[0] == 2){
+                            if (middle_tile == 'O'){
+                                white_piece_on_face_side_color = matrix[5][0][1];
+                            } else if (middle_tile == 'B') {
+                                white_piece_on_face_side_color = matrix[5][1][0];
+                            } else if (middle_tile == 'R') {
+                                white_piece_on_face_side_color = matrix[5][2][1];
+                            } else if (middle_tile == 'G') {
+                                white_piece_on_face_side_color = matrix[5][1][2];
+                            }
+
+                            int target = getTargetPosition(getPositionInOrder(middle_tile), true);
+                            if(target == getPositionInOrder(white_piece_on_face_side_color)){
+                                moveRowHorizontal(matrix[0], 2, true);
+                            } else if (getPositionInOrder(middle_tile) != getPositionInOrder(white_piece_on_face_side_color)){
+                                target = getTargetPosition(getPositionInOrder(middle_tile), false);
+                                if(target == getPositionInOrder(white_piece_on_face_side_color)){
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                }
+                                else{
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                    moveRowHorizontal(matrix[0], 2, false);
+                                }
+                            }
+
+                            if(white_piece_on_face_side_color == 'O'){
+                                moveRowHorizontalUpperFace(matrix[4], 2, true);
+                                moveRowHorizontalUpperFace(matrix[4], 2, true);
+                            } else if (white_piece_on_face_side_color == 'R') {
+                                moveRowHorizontalUpperFace(matrix[4], 0, true);
+                                moveRowHorizontalUpperFace(matrix[4], 0, true);
+                            } else if (white_piece_on_face_side_color == 'G') {
+                                moveRowVertical(matrix[0], 2, true);
+                                moveRowVertical(matrix[0], 2, true);
+                            } else if (white_piece_on_face_side_color == 'B') {
+                                moveRowVertical(matrix[0], 0, true);
+                                moveRowVertical(matrix[0], 0, true);
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
         }
-
-
-
-
-
-
-
-
-
-
-        System.out.println(Arrays.toString(white_piece_on_bottom_coord));
-
     }
 
     public static boolean checkWhiteCross(){
