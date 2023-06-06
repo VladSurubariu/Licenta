@@ -9,7 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         matrix = initialiseMatrix2();
-        char[][] face = matrix[3];
 
         solve();
 
@@ -51,29 +50,29 @@ public class Main {
 
         char[][][] c_matrix = new char[6][3][3];
 
-        c_matrix[0][0] = new char[]{'O', 'O', 'R'};
-        c_matrix[0][1] = new char[]{'Y', 'O', 'B'};
-        c_matrix[0][2] = new char[]{'G', 'O', 'R'};
+        c_matrix[0][0] = new char[]{'O', 'O', 'O'};
+        c_matrix[0][1] = new char[]{'O', 'O', 'O'};
+        c_matrix[0][2] = new char[]{'Y', 'G', 'G'};
 
-        c_matrix[1][0] = new char[]{'Y', 'G', 'G'};
-        c_matrix[1][1] = new char[]{'R', 'G', 'R'};
-        c_matrix[1][2] = new char[]{'Y', 'Y', 'B'};
+        c_matrix[1][0] = new char[]{'G', 'G', 'G'};
+        c_matrix[1][1] = new char[]{'G', 'G', 'G'};
+        c_matrix[1][2] = new char[]{'R', 'O', 'O'};
 
-        c_matrix[2][0] = new char[]{'R', 'R', 'W'};
-        c_matrix[2][1] = new char[]{'Y', 'R', 'G'};
-        c_matrix[2][2] = new char[]{'O', 'O', 'W'};
+        c_matrix[2][0] = new char[]{'R', 'R', 'R'};
+        c_matrix[2][1] = new char[]{'R', 'R', 'R'};
+        c_matrix[2][2] = new char[]{'G', 'R', 'Y'};
 
-        c_matrix[3][0] = new char[]{'O', 'B', 'B'};
-        c_matrix[3][1] = new char[]{'R', 'B', 'B'};
-        c_matrix[3][2] = new char[]{'B', 'G', 'O'};
+        c_matrix[3][0] = new char[]{'B', 'B', 'B'};
+        c_matrix[3][1] = new char[]{'B', 'B', 'B'};
+        c_matrix[3][2] = new char[]{'R', 'B', 'O'};
 
-        c_matrix[4][0] = new char[]{'G', 'W', 'W'};
+        c_matrix[4][0] = new char[]{'W', 'W', 'W'};
         c_matrix[4][1] = new char[]{'W', 'W', 'W'};
-        c_matrix[4][2] = new char[]{'W', 'W', 'B'};
+        c_matrix[4][2] = new char[]{'W', 'W', 'W'};
 
-        c_matrix[5][0] = new char[]{'Y', 'B', 'G'};
-        c_matrix[5][1] = new char[]{'O', 'Y', 'G'};
-        c_matrix[5][2] = new char[]{'R', 'Y', 'Y'};
+        c_matrix[5][0] = new char[]{'B', 'Y', 'Y'};
+        c_matrix[5][1] = new char[]{'Y', 'Y', 'Y'};
+        c_matrix[5][2] = new char[]{'B', 'Y', 'Y'};
 
         return c_matrix;
     }
@@ -93,6 +92,14 @@ public class Main {
             columnColors[i] = face[i][columnID];
         }
         return columnColors;
+    }
+
+    public static void solve(){
+        whiteCrossStep();
+        whiteCornersStep();
+        secondLayer();
+        yellowCrossStep();
+        swapEdges();
     }
 
     public static char[][] copyFace(char [][] face){
@@ -395,10 +402,196 @@ public class Main {
         }
     }
 
-    public static void solve(){
+    public static void yellowCrossStep(){
+        while(matrix[5][0][1] != 'Y' || matrix[5][1][0] !='Y' || matrix[5][1][2] != 'Y' || matrix[5][2][1] != 'Y'){
+            if(matrix[5][0][1] == 'Y' && matrix[5][1][2] == 'Y' && matrix[5][1][0] != 'Y' && matrix[5][2][1] != 'Y'){
+                moveRowHorizontal(matrix[0], 2, true);
+            } else if (matrix[5][2][1] == 'Y' && matrix[5][1][2] == 'Y' && matrix[5][1][0] != 'Y' && matrix[5][0][1] != 'Y') {
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontal(matrix[0], 2, true);
+            } else if (matrix[5][2][1] == 'Y' && matrix[5][1][0] == 'Y' && matrix[5][1][2] != 'Y' && matrix[5][0][1] != 'Y') {
+                moveRowHorizontal(matrix[0], 2, false);
+            }
 
-        whiteCrossStep();
-        whiteCornersStep();
+            if(matrix[5][0][1] == 'Y' && matrix[5][1][1] == 'Y' && matrix[5][2][1] == 'Y'){
+                moveRowHorizontal(matrix[0], 2, false);
+            }
+
+            moveRowHorizontalUpperFace(matrix[4], 2, false);
+            moveRowVertical(matrix[0], 0, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 0, true);
+            moveRowHorizontal(matrix[0], 2, true);
+            moveRowHorizontalUpperFace(matrix[4], 2, true);
+        }
+    }
+
+    public static void secondLayer(){
+        int[] sidePiece = new int[3];
+        int yellow_face_x, yellow_face_y, lateral_face_id;
+        boolean leftMoves = false;
+
+        while(!checkSecondLayer()){
+            sidePiece = findNonYellowTileOnYellowFace();
+            yellow_face_x = sidePiece[0];
+            yellow_face_y = sidePiece[1];
+            lateral_face_id = sidePiece[2];
+
+            char lateral_color = matrix[lateral_face_id][2][1];
+            char yellow_face_color = matrix[5][yellow_face_x][yellow_face_y];
+
+            if(lateral_color != matrix[lateral_face_id][1][1]){
+                if(getTargetPosition(getPositionInOrder(getMiddleTile(matrix[lateral_face_id])), true) == getPositionInOrder(lateral_color)){
+                    moveRowHorizontal(matrix[0], 2, true );
+                } else if (getTargetPosition(getPositionInOrder(getMiddleTile(matrix[lateral_face_id])), false) == getPositionInOrder(lateral_color)) {
+                    moveRowHorizontal(matrix[0], 2, false );
+                }
+                else{
+                    moveRowHorizontal(matrix[0], 2, true );
+                    moveRowHorizontal(matrix[0], 2, true );
+                }
+            }
+
+            if(getTargetPosition(getPositionInOrder(lateral_color), true) == getPositionInOrder(yellow_face_color)){
+                leftMoves = false; //its false because you are actually keeping the yellow face on top, so it is translated
+            }
+            else{
+                leftMoves = true;
+            }
+
+            secondLayerTrick(matrix[getPositionInOrder(lateral_color)], leftMoves);
+        }
+    }
+
+    private static void secondLayerTrick(char[][] face, boolean left){
+        int pos_x = 2;
+        int pos_y = 1;
+        char color = face[pos_x][pos_y];
+        char[][] orange_face = matrix[0];
+        char[][] white_face = matrix[4];
+
+        if(!left){
+            //dreapta
+            if(face == matrix[0]){
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 0, false);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 0, true);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 2, true);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 2, false);
+            }
+            else if(face == matrix[1]){
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 2, false);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 2, true);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 2, false);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 2, true);
+            }
+            else if(face == matrix[2]){
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 2, true);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 2, false);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 0, false);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 0, true);
+            }
+            else if(face == matrix[3]){ //works
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 0, true);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 0, false);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 0, true);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 0, false);
+            }
+        }
+        else{
+            //stanga
+            if(face == matrix[0]){
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 2, false);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 2, true);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 2, false);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 2, true);
+            }
+            else if(face == matrix[1]){
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 0, false);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 0, true);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 2, true);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 2, false);
+
+            }
+            else if(face == matrix[2]){
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 0, true);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 0, false);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 0, true);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 0, false);
+            }
+            else if(face == matrix[3]){ //works
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowHorizontalUpperFace(matrix[4], 2, true);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowHorizontalUpperFace(matrix[4], 2, false);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 0, false);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 0, true);
+            }
+        }
+    }
+
+    public static boolean checkSecondLayer(){
+        for(int i=0;i<4; i++){
+            if(matrix[i][1][0] != matrix[i][1][1] || matrix[i][1][1] != matrix[i][1][2]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int[] findNonYellowTileOnYellowFace(){
+        int[] returnValue = new int[3];
+        Arrays.fill(returnValue, 1000);
+        char[][] yellow_face = matrix[5];
+
+        if(yellow_face[0][1] != 'Y' && matrix[0][2][1] != 'Y'){
+            returnValue[0] = 0; // yellow face x
+            returnValue[1] = 1; // yellow face y
+            returnValue[2] = 0; // lateral face id
+        } else if (yellow_face[1][0] != 'Y' && matrix[3][2][1] != 'Y') {
+            returnValue[0] = 1; // yellow face x
+            returnValue[1] = 0; // yellow face y
+            returnValue[2] = 3; // lateral face id
+        }  else if (yellow_face[1][2] != 'Y' && matrix[1][2][1] != 'Y') {
+            returnValue[0] = 1; // yellow face x
+            returnValue[1] = 2; // yellow face y
+            returnValue[2] = 1; // lateral face id
+        } else if (yellow_face[2][1] != 'Y' && matrix[2][2][1] != 'Y') {
+            returnValue[0] = 2; // yellow face x
+            returnValue[1] = 0; // yellow face y
+            returnValue[2] = 2; // lateral face id
+        }
+
+        return returnValue;
 
     }
 
@@ -916,5 +1109,87 @@ public class Main {
         }
 
         return returnValue;
+    }
+
+    public static void swapEdges(){
+        while(!checkEdges()){
+            for(int i=0;i<4;i++){
+                if(matrix[i][2][1] != matrix[i][1][1]){
+                    int neighbour_tile_middle_id = getTargetPosition(getPositionInOrder(getMiddleTile(matrix[i])), true);
+                    if(matrix[neighbour_tile_middle_id][2][1] == matrix[i][1][1]){
+                        changePlaces(neighbour_tile_middle_id, i);
+                    }
+                    else{
+                        neighbour_tile_middle_id = getTargetPosition(getPositionInOrder(getMiddleTile(matrix[i])), false);
+                        if(matrix[neighbour_tile_middle_id][2][1] == matrix[i][1][1]){
+                            changePlaces(i, neighbour_tile_middle_id);
+                        }
+                        else{
+                            int neighbour_of_neighbour = getTargetPosition(neighbour_tile_middle_id, false);
+                            changePlaces(neighbour_of_neighbour, neighbour_tile_middle_id);
+                            changePlaces(neighbour_tile_middle_id, i);
+                            changePlaces(neighbour_of_neighbour, neighbour_tile_middle_id);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static boolean checkEdges(){
+        for(int i = 0; i<4; i++){
+            char color = matrix[i][2][1];
+            if(color != matrix[i][1][1]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void changePlaces(int origin_middle, int destination_middle){
+        if (origin_middle == 0){
+            moveRowVertical(matrix[0], 0, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 0, true);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 0, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 0, true);
+            moveRowHorizontal(matrix[0], 2, false);
+        }
+        else if (origin_middle == 1){
+            moveRowHorizontalUpperFace(matrix[4], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 2, true);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 2, true);
+            moveRowHorizontal(matrix[0], 2, false);
+        }
+        else if (origin_middle == 2){
+            moveRowVertical(matrix[0], 2, true);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 2, true);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+        }
+        else if (origin_middle == 3){
+            moveRowHorizontalUpperFace(matrix[4], 0, true);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 0, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 0, true);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 0, false);
+            moveRowHorizontal(matrix[0], 2, false);
+        }
     }
 }
