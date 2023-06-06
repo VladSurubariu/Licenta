@@ -11,7 +11,7 @@ public class Main {
         matrix = initialiseMatrix2();
         char[][] face = matrix[3];
 
-        solve(matrix);
+        solve();
 
     }
 
@@ -51,29 +51,29 @@ public class Main {
 
         char[][][] c_matrix = new char[6][3][3];
 
-        c_matrix[0][0] = new char[]{'G', 'G', 'O'};
-        c_matrix[0][1] = new char[]{'W', 'O', 'O'};
-        c_matrix[0][2] = new char[]{'O', 'G', 'G'};
+        c_matrix[0][0] = new char[]{'O', 'O', 'R'};
+        c_matrix[0][1] = new char[]{'Y', 'O', 'B'};
+        c_matrix[0][2] = new char[]{'G', 'O', 'R'};
 
-        c_matrix[1][0] = new char[]{'B', 'W', 'R'};
-        c_matrix[1][1] = new char[]{'W', 'G', 'Y'};
-        c_matrix[1][2] = new char[]{'W', 'O', 'W'};
+        c_matrix[1][0] = new char[]{'Y', 'G', 'G'};
+        c_matrix[1][1] = new char[]{'R', 'G', 'R'};
+        c_matrix[1][2] = new char[]{'Y', 'Y', 'B'};
 
-        c_matrix[2][0] = new char[]{'Y', 'G', 'Y'};
-        c_matrix[2][1] = new char[]{'R', 'R', 'Y'};
-        c_matrix[2][2] = new char[]{'B', 'Y', 'G'};
+        c_matrix[2][0] = new char[]{'R', 'R', 'W'};
+        c_matrix[2][1] = new char[]{'Y', 'R', 'G'};
+        c_matrix[2][2] = new char[]{'O', 'O', 'W'};
 
-        c_matrix[3][0] = new char[]{'R', 'R', 'Y'};
-        c_matrix[3][1] = new char[]{'B', 'B', 'G'};
-        c_matrix[3][2] = new char[]{'O', 'R', 'W'};
+        c_matrix[3][0] = new char[]{'O', 'B', 'B'};
+        c_matrix[3][1] = new char[]{'R', 'B', 'B'};
+        c_matrix[3][2] = new char[]{'B', 'G', 'O'};
 
-        c_matrix[4][0] = new char[]{'G', 'Y', 'B'};
-        c_matrix[4][1] = new char[]{'B', 'W', 'B'};
-        c_matrix[4][2] = new char[]{'O', 'R', 'Y'};
+        c_matrix[4][0] = new char[]{'G', 'W', 'W'};
+        c_matrix[4][1] = new char[]{'W', 'W', 'W'};
+        c_matrix[4][2] = new char[]{'W', 'W', 'B'};
 
-        c_matrix[5][0] = new char[]{'B', 'O', 'R'};
-        c_matrix[5][1] = new char[]{'W', 'Y', 'B'};
-        c_matrix[5][2] = new char[]{'W', 'O', 'R'};
+        c_matrix[5][0] = new char[]{'Y', 'B', 'G'};
+        c_matrix[5][1] = new char[]{'O', 'Y', 'G'};
+        c_matrix[5][2] = new char[]{'R', 'Y', 'Y'};
 
         return c_matrix;
     }
@@ -395,39 +395,297 @@ public class Main {
         }
     }
 
-    public static void solve(char[][][] matrix){
+    public static void solve(){
 
         whiteCrossStep();
-
+        whiteCornersStep();
 
     }
 
-    public static int[] searchForSidePiece(char[][] face, char color){
-        int[] returnValue = new int[2];
-        Arrays.fill(returnValue, 1000);
+    public static void whiteCornersStep(){
+        while(!checkWhiteCorners()){
+            int[] xyzCorner;
+            char second_color, third_color, aux;
+            int[] second_color_coords = new int[3], third_color_coords = new int[3];
+            int second_color_face_middle, third_color_face_middle, aux_face_middle;
 
-        if(face[0][1] == color){
-            returnValue[0] = 0;
-            returnValue[1] = 1;
-        } else if (face[1][0] == color) {
-            returnValue[0] = 1;
-            returnValue[1] = 0;
-        } else if (face[1][2] == color) {
-            returnValue[0] = 1;
-            returnValue[1] = 2;
-        } else if (face[2][1] == color) {
-            returnValue[0] = 2;
-            returnValue[1] = 1;
+            xyzCorner = getWhiteCornersBottomLayer();
+
+            if(xyzCorner[0] != 1000){
+                if(xyzCorner[0] == 5){
+                    if(xyzCorner[1] == 0){
+                        if(xyzCorner[2] == 0)
+                        {
+                            second_color_face_middle = getPositionInOrder('B');
+                            third_color_face_middle = getPositionInOrder('O');
+                        }
+                        else{
+                            second_color_face_middle = getPositionInOrder('O');
+                            third_color_face_middle = getPositionInOrder('G');
+                        }
+                    }
+                    else{
+                        if(xyzCorner[2] == 0)
+                        {
+                            second_color_face_middle = getPositionInOrder('R');
+                            third_color_face_middle = getPositionInOrder('B');
+                        }
+                        else{
+                            second_color_face_middle = getPositionInOrder('G');
+                            third_color_face_middle = getPositionInOrder('R');
+                        }
+                    }
+                    second_color_coords[0] = second_color_face_middle;
+                    third_color_coords[0] = third_color_face_middle;
+
+                    second_color_coords[1] = 2;
+                    third_color_coords[1] = 2;
+
+                    second_color_coords[2] = 2;
+                    third_color_coords[2] = 0;
+                }
+                else{
+                    third_color_face_middle = getPositionInOrder('Y');
+
+                    if(xyzCorner[2] == 0){
+                        second_color_face_middle = getTargetPosition(getPositionInOrder(getMiddleTile(matrix[xyzCorner[0]])), true);
+                        second_color_coords[2] = 2;
+
+                        if(xyzCorner[0] == 0){
+                            third_color_coords[1] = 0;
+                            third_color_coords[2] = 0;
+                        } else if(xyzCorner[0] == 1) {
+                            third_color_coords[1] = 0;
+                            third_color_coords[2] = 2;
+                        } else if(xyzCorner[0] == 2) {
+                            third_color_coords[1] = 2;
+                            third_color_coords[2] = 2;
+                        } else if(xyzCorner[0] == 3) {
+                            third_color_coords[1] = 2;
+                            third_color_coords[2] = 0;
+                        }
+
+                    }else{
+                        second_color_face_middle = getTargetPosition(getPositionInOrder(getMiddleTile(matrix[xyzCorner[0]])), false);
+                        second_color_coords[2] = 0;
+
+                        if(xyzCorner[0] == 0){
+                            third_color_coords[1] = 0;
+                            third_color_coords[2] = 2;
+                        } else if(xyzCorner[0] == 1) {
+                            third_color_coords[1] = 2;
+                            third_color_coords[2] = 2;
+                        } else if(xyzCorner[0] == 2) {
+                            third_color_coords[1] = 2;
+                            third_color_coords[2] = 0;
+                        } else if(xyzCorner[0] == 3) {
+                            third_color_coords[1] = 0;
+                            third_color_coords[2] = 0;
+                        }
+                    }
+                    second_color_coords[0] = second_color_face_middle;
+                    second_color_coords[1] = 2;
+
+                    third_color_coords[0] = third_color_face_middle;
+                }
+
+                second_color = matrix[second_color_coords[0]][second_color_coords[1]][second_color_coords[2]];
+                third_color = matrix[third_color_coords[0]][third_color_coords[1]][third_color_coords[2]];
+
+                if(third_color_face_middle == getPositionInOrder('Y')){
+                    aux = matrix[xyzCorner[0]][xyzCorner[1]][xyzCorner[2]];
+                    aux_face_middle =  getPositionInOrder(matrix[xyzCorner[0]][1][1]);
+                }
+                else{
+                    aux = third_color;
+                    aux_face_middle = third_color_face_middle;
+                }
+
+                if(getPositionInOrder(second_color) == second_color_face_middle || getPositionInOrder(third_color) == second_color_face_middle){
+                    if(getPositionInOrder(second_color) == aux_face_middle || getPositionInOrder(third_color) == aux_face_middle){
+                        while(!checkCorrectCorner(second_color_face_middle, aux_face_middle) && !checkCorrectCorner(aux_face_middle, second_color_face_middle)){
+                            if(aux_face_middle != getPositionInOrder('Y')){
+                                if(getTargetPosition(getPositionInOrder(matrix[aux_face_middle][1][1]), false) == getPositionInOrder(second_color)){
+                                    fourMoves(matrix[getPositionInOrder(second_color)][1][1]);
+                                }
+                                else{
+                                    fourMoves(matrix[aux_face_middle][1][1]);
+                                }
+                            }
+                            else{
+                                fourMoves(matrix[xyzCorner[0]][1][1]);
+                            }
+                        }
+                    }
+                    else{
+                        moveRowHorizontal(matrix[0], 2, true);
+                    }
+                }
+                else{
+                    if(getPositionInOrder(second_color) == aux_face_middle || getPositionInOrder(third_color) == aux_face_middle){
+                        moveRowHorizontal(matrix[0], 2, false);
+                    }
+                    else{
+                        moveRowHorizontal(matrix[0], 2, false);
+                        moveRowHorizontal(matrix[0], 2, false);
+                    }
+                }
+            }
+            else{
+                if(!checkCorrectCorner(0, 1)){
+                    moveRowVertical(matrix[0], 2, false);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowVertical(matrix[0], 2, true);
+                }
+                else if(!checkCorrectCorner(1, 2)){
+                    moveRowHorizontal(matrix[4], 0, false);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowHorizontal(matrix[4], 0, true);
+                }
+                else if(!checkCorrectCorner(2, 3)){
+                    moveRowHorizontal(matrix[4], 0, true);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowHorizontal(matrix[4], 0, false);
+                }
+                else if(!checkCorrectCorner(3, 0)){
+                    moveRowVertical(matrix[0], 0, false);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowVertical(matrix[0], 0, true);
+                }
+            }
+        }
+    }
+
+    public static boolean checkCorrectCorner(int middle_color1, int middle_color2){
+        if(middle_color1 == 3 && middle_color2 == 0){
+            if((getPositionInOrder(matrix[3][0][2])) == middle_color1 && (getPositionInOrder(matrix[0][0][0])) == middle_color2){
+                return true;
+            }
+        } else if (middle_color1 == 0 && middle_color2 == 1) {
+            if((getPositionInOrder(matrix[0][0][2])) == middle_color1 && (getPositionInOrder(matrix[1][0][0])) == middle_color2){
+                return true;
+            }
+        } else if (middle_color1 == 1 && middle_color2 == 2) {
+            if((getPositionInOrder(matrix[1][0][2])) == middle_color1 && (getPositionInOrder(matrix[2][0][0])) == middle_color2){
+                return true;
+            }
+        } else if (middle_color1 == 2 && middle_color2 == 3) {
+            if((getPositionInOrder(matrix[2][0][2])) == middle_color1 && (getPositionInOrder(matrix[3][0][0])) == middle_color2){
+                return true;
+            }
         }
 
+        return false;
+    }
+
+    public static int[] getWhiteCornersBottomLayer(){
+        int[] returnValue = new int[3];
+        Arrays.fill(returnValue, 1000);
+
+        // Search the bottom face for white corners
+        for(int i = 0; i<=2; i=i+2){
+            for(int j=0; j<=2; j=j+2){
+                if(matrix[5][i][j] == 'W'){
+                    returnValue[0] = 5;
+                    returnValue[1] = i;
+                    returnValue[2] = j;
+
+                    return returnValue;
+                }
+            }
+        }
+
+        //Search the bottom rows for white corners
+        for(int i = 0; i<=3; i++){
+            for(int z=0; z<=2; z=z+2){
+                if(matrix[i][2][z] == 'W'){
+                    returnValue[0] = i;
+                    returnValue[1] = 2;
+                    returnValue[2] = z;
+
+                    return returnValue;
+                }
+            }
+        }
+
+
+
+
         return returnValue;
+    }
+
+    public static void fourMoves(char middle_of_face){
+
+        if(middle_of_face == 'O'){
+            //TODO: sus, stanga, jos, dreapta
+            moveRowVertical(matrix[0], 0, false);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 0, true);
+            moveRowHorizontal(matrix[0], 2, true);
+        } else if (middle_of_face == 'R') {
+            moveRowVertical(matrix[0], 2, true);
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowVertical(matrix[0], 2, false);
+            moveRowHorizontal(matrix[0], 2, true);
+        } else if (middle_of_face == 'B') {
+            moveRowHorizontalUpperFace(matrix[4], 0, true); // era 2 inainte
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 0, false);
+            moveRowHorizontal(matrix[0], 2, true);
+        } else if (middle_of_face == 'G') {
+            moveRowHorizontalUpperFace(matrix[4], 2, false); // era 0 inainte
+            moveRowHorizontal(matrix[0], 2, false);
+            moveRowHorizontalUpperFace(matrix[4], 2, true);
+            moveRowHorizontal(matrix[0], 2, true);
+        }
+    }
+
+    public static int[] getWhiteFaceCorners(){
+        int[] returnValue = new int[3];
+        Arrays.fill(returnValue, 1000);
+
+        for(int i=0; i<6;i++){
+            for(int j=0; j<=2; j=j+2){
+                for(int z=0; z<=2; z=z+2){
+                    if (matrix[i][j][z] == 'W') {
+                        returnValue[0] = i;
+                        returnValue[1] = j;
+                        returnValue[2] = z;
+                        return returnValue;
+                    }
+                }
+            }
+        }
+        return returnValue;
+    }
+
+    public static boolean checkWhiteCorners(){
+        char[][] white_face = matrix[4];
+
+        for(int i=0; i<3;i++){
+            for(int j=0; j<3; j++){
+                if (white_face[i][j] != 'W'){
+                    return false;
+                }
+            }
+        }
+
+        for(int i=0;i<4;i++){
+            for(int j=0; j<3; j++){
+                if(matrix[i][0][j] != matrix[i][1][1]){
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public static void whiteCrossStep(){
 
         char[][] bottom_face;
         char secondary_color_target_middle = 'W';
-        int[] white_piece_on_face = new int[2];
+        int[] white_piece_on_face;
 
         while(!checkWhiteCross()){
             bottom_face = matrix[5];
@@ -539,7 +797,7 @@ public class Main {
                                     }
                                 }
                             }
-                            System.out.println(matrix);
+                            System.out.println(Arrays.deepToString(matrix));
                         }
                         else if (white_piece_on_face[0] == 1){
                             if(middle_tile == 'O'){
@@ -639,10 +897,24 @@ public class Main {
         return false;
     }
 
-    public static void checkSecondaryColorsForWhiteCross(){
+    public static int[] searchForSidePiece(char[][] face, char color){
+        int[] returnValue = new int[2];
+        Arrays.fill(returnValue, 1000);
 
+        if(face[0][1] == color){
+            returnValue[0] = 0;
+            returnValue[1] = 1;
+        } else if (face[1][0] == color) {
+            returnValue[0] = 1;
+            returnValue[1] = 0;
+        } else if (face[1][2] == color) {
+            returnValue[0] = 1;
+            returnValue[1] = 2;
+        } else if (face[2][1] == color) {
+            returnValue[0] = 2;
+            returnValue[1] = 1;
+        }
+
+        return returnValue;
     }
-
-
-
 }
