@@ -52,27 +52,27 @@ public class Main {
 
         c_matrix[0][0] = new char[]{'O', 'O', 'O'};
         c_matrix[0][1] = new char[]{'O', 'O', 'O'};
-        c_matrix[0][2] = new char[]{'Y', 'G', 'G'};
+        c_matrix[0][2] = new char[]{'G', 'B', 'Y'};
 
         c_matrix[1][0] = new char[]{'G', 'G', 'G'};
         c_matrix[1][1] = new char[]{'G', 'G', 'G'};
-        c_matrix[1][2] = new char[]{'R', 'O', 'O'};
+        c_matrix[1][2] = new char[]{'O', 'G', 'R'};
 
         c_matrix[2][0] = new char[]{'R', 'R', 'R'};
         c_matrix[2][1] = new char[]{'R', 'R', 'R'};
-        c_matrix[2][2] = new char[]{'G', 'R', 'Y'};
+        c_matrix[2][2] = new char[]{'B', 'O', 'Y'};
 
         c_matrix[3][0] = new char[]{'B', 'B', 'B'};
         c_matrix[3][1] = new char[]{'B', 'B', 'B'};
-        c_matrix[3][2] = new char[]{'R', 'B', 'O'};
+        c_matrix[3][2] = new char[]{'B', 'R', 'Y'};
 
         c_matrix[4][0] = new char[]{'W', 'W', 'W'};
         c_matrix[4][1] = new char[]{'W', 'W', 'W'};
         c_matrix[4][2] = new char[]{'W', 'W', 'W'};
 
-        c_matrix[5][0] = new char[]{'B', 'Y', 'Y'};
+        c_matrix[5][0] = new char[]{'R', 'Y', 'G'};
         c_matrix[5][1] = new char[]{'Y', 'Y', 'Y'};
-        c_matrix[5][2] = new char[]{'B', 'Y', 'Y'};
+        c_matrix[5][2] = new char[]{'O', 'Y', 'Y'};
 
         return c_matrix;
     }
@@ -1116,19 +1116,19 @@ public class Main {
             for(int i=0;i<4;i++){
                 if(matrix[i][2][1] != matrix[i][1][1]){
                     int neighbour_tile_middle_id = getTargetPosition(getPositionInOrder(getMiddleTile(matrix[i])), true);
-                    if(matrix[neighbour_tile_middle_id][2][1] == matrix[i][1][1]){
+                    if(matrix[i][2][1] == matrix[neighbour_tile_middle_id][1][1] || matrix[neighbour_tile_middle_id][2][1] == matrix[i][1][1]){
                         changePlaces(neighbour_tile_middle_id, i);
+                        break;
                     }
                     else{
                         neighbour_tile_middle_id = getTargetPosition(getPositionInOrder(getMiddleTile(matrix[i])), false);
-                        if(matrix[neighbour_tile_middle_id][2][1] == matrix[i][1][1]){
+                        if(matrix[i][2][1] == matrix[neighbour_tile_middle_id][1][1] || matrix[neighbour_tile_middle_id][2][1] == matrix[i][1][1]){
                             changePlaces(i, neighbour_tile_middle_id);
+                            break;
                         }
                         else{
-                            int neighbour_of_neighbour = getTargetPosition(neighbour_tile_middle_id, false);
-                            changePlaces(neighbour_of_neighbour, neighbour_tile_middle_id);
-                            changePlaces(neighbour_tile_middle_id, i);
-                            changePlaces(neighbour_of_neighbour, neighbour_tile_middle_id);
+                            moveRowHorizontal(matrix[0], 2, true);
+                            break;
                         }
                     }
                 }
