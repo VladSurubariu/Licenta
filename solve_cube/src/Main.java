@@ -9,7 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         matrix = initialiseMatrix2();
-
         solve();
 
     }
@@ -52,27 +51,27 @@ public class Main {
 
         c_matrix[0][0] = new char[]{'O', 'O', 'O'};
         c_matrix[0][1] = new char[]{'O', 'O', 'O'};
-        c_matrix[0][2] = new char[]{'G', 'B', 'Y'};
+        c_matrix[0][2] = new char[]{'Y', 'O', 'G'};
 
         c_matrix[1][0] = new char[]{'G', 'G', 'G'};
         c_matrix[1][1] = new char[]{'G', 'G', 'G'};
-        c_matrix[1][2] = new char[]{'O', 'G', 'R'};
+        c_matrix[1][2] = new char[]{'Y', 'G', 'R'};
 
         c_matrix[2][0] = new char[]{'R', 'R', 'R'};
         c_matrix[2][1] = new char[]{'R', 'R', 'R'};
-        c_matrix[2][2] = new char[]{'B', 'O', 'Y'};
+        c_matrix[2][2] = new char[]{'Y', 'R', 'R'};
 
         c_matrix[3][0] = new char[]{'B', 'B', 'B'};
         c_matrix[3][1] = new char[]{'B', 'B', 'B'};
-        c_matrix[3][2] = new char[]{'B', 'R', 'Y'};
+        c_matrix[3][2] = new char[]{'B', 'B', 'O'};
 
         c_matrix[4][0] = new char[]{'W', 'W', 'W'};
         c_matrix[4][1] = new char[]{'W', 'W', 'W'};
         c_matrix[4][2] = new char[]{'W', 'W', 'W'};
 
-        c_matrix[5][0] = new char[]{'R', 'Y', 'G'};
+        c_matrix[5][0] = new char[]{'B', 'Y', 'O'};
         c_matrix[5][1] = new char[]{'Y', 'Y', 'Y'};
-        c_matrix[5][2] = new char[]{'O', 'Y', 'Y'};
+        c_matrix[5][2] = new char[]{'Y', 'Y', 'G'};
 
         return c_matrix;
     }
@@ -100,6 +99,8 @@ public class Main {
         secondLayer();
         yellowCrossStep();
         swapEdges();
+        cycleCorners();
+        orientCorners();
     }
 
     public static char[][] copyFace(char [][] face){
@@ -1192,4 +1193,173 @@ public class Main {
             moveRowHorizontal(matrix[0], 2, false);
         }
     }
+
+    public static void cycleCorners(){
+        while(!checkCorners()){
+            int[] aux = findCorners();
+
+            int yellowface_x = aux[0];
+            int yellowface_y = aux[1];
+
+            if(yellowface_x == 1000 && yellowface_y == 1000){ // hold yellow[0][0]
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 0, false);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 2, false);
+                moveRowHorizontal(matrix[0], 2, false);
+                moveRowVertical(matrix[0], 0, true);
+                moveRowHorizontal(matrix[0], 2, true);
+                moveRowVertical(matrix[0], 2, true);
+            } else {
+                if(yellowface_x == 0 && yellowface_y == 0){
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowVertical(matrix[0], 0, false);
+                    moveRowHorizontal(matrix[0], 2, true);
+                    moveRowVertical(matrix[0], 2, false);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowVertical(matrix[0], 0, true);
+                    moveRowHorizontal(matrix[0], 2, true);
+                    moveRowVertical(matrix[0], 2, true);
+                } else if (yellowface_x == 0 && yellowface_y == 2) {
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowHorizontalUpperFace(matrix[4], 2, false);
+                    moveRowHorizontal(matrix[0], 2, true);
+                    moveRowHorizontalUpperFace(matrix[4], 0, false);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowHorizontalUpperFace(matrix[4], 2, false);
+                    moveRowHorizontalUpperFace(matrix[4], 2, true);
+                    moveRowHorizontalUpperFace(matrix[4], 2, true);
+                    moveRowHorizontalUpperFace(matrix[4], 0, true);
+                } else if (yellowface_x == 2 && yellowface_y == 0) {
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowHorizontalUpperFace(matrix[4], 0, true);
+                    moveRowHorizontal(matrix[0], 2, true);
+                    moveRowHorizontalUpperFace(matrix[4], 2, true);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowHorizontalUpperFace(matrix[4], 0, false);
+                    moveRowHorizontal(matrix[0], 2, true);
+                    moveRowHorizontalUpperFace(matrix[4], 2, false);
+                } else if (yellowface_x == 2 && yellowface_y == 2) {
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowVertical(matrix[0], 2, true);
+                    moveRowHorizontal(matrix[0], 2, true);
+                    moveRowVertical(matrix[0], 0, true);
+                    moveRowHorizontal(matrix[0], 2, false);
+                    moveRowVertical(matrix[0], 2, false);
+                    moveRowHorizontal(matrix[0], 2, true);
+                    moveRowVertical(matrix[0], 0, false);
+                }
+            }
+        }
+    }
+
+    public static boolean checkCorners(){
+        if(matrix[5][0][0] != 'Y' && matrix[5][0][0] != 'O' && matrix[5][0][0] != 'B'){
+            return false;
+        } else if ( matrix[0][2][0] != 'Y' && matrix[0][2][0] != 'B' && matrix[0][2][0] != 'O' ) {
+            return false;
+        } else if (matrix[3][2][2] != 'Y' && matrix[3][2][2] != 'B' && matrix[3][2][2] != 'O') {
+            return false;
+        }
+
+        if(matrix[5][0][2] != 'Y' && matrix[5][0][2] != 'O' && matrix[5][0][2] != 'G'){
+            return false;
+        } else if ( matrix[0][2][2] != 'Y' && matrix[0][2][2] != 'G' && matrix[0][2][2] != 'O' ) {
+            return false;
+        } else if (matrix[1][2][0] != 'Y' && matrix[1][2][0] != 'G' && matrix[1][2][0] != 'O') {
+            return false;
+        }
+
+        if(matrix[5][2][0] != 'Y' && matrix[5][2][0] != 'R' && matrix[5][2][0] != 'B'){
+            return false;
+        } else if ( matrix[3][2][0] != 'Y' && matrix[3][2][0] != 'R' && matrix[3][2][0] != 'B' ) {
+            return false;
+        } else if (matrix[2][2][2] != 'Y' && matrix[2][2][2] != 'R' && matrix[2][2][2] != 'B') {
+            return false;
+        }
+
+        if(matrix[5][2][2] != 'Y' && matrix[5][2][2] != 'R' && matrix[5][2][2] != 'G'){
+            return false;
+        } else if ( matrix[1][2][2] != 'Y' && matrix[1][2][2] != 'R' && matrix[1][2][2] != 'G' ) {
+            return false;
+        } else if (matrix[2][2][0] != 'Y' && matrix[2][2][0] != 'R' && matrix[2][2][0] != 'G') {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static int[] findCorners(){
+
+        int[] returnValue = new int[4];
+        Arrays.fill(returnValue, 1000);
+
+        if(matrix[5][0][0] == 'Y'){
+            if(matrix[0][2][0] == 'O' && matrix[3][2][2] == 'B'){
+                returnValue[0] = 0;
+                returnValue[1] = 0;
+            }
+            else if(matrix[0][2][0] == 'B' || matrix[3][2][2] == 'O'){
+                returnValue[0] = 0;
+                returnValue[1] = 0;
+            }
+        } else if (matrix[5][0][0] == 'O' || matrix[5][0][0] == 'B') {
+            if((matrix[0][2][0] == 'Y' || matrix[0][2][0] == 'B' || matrix[0][2][0] == 'O') && (matrix[3][2][2] == 'Y' || matrix[3][2][2] == 'B' || matrix[3][2][2] == 'O')){
+                returnValue[0] = 0;
+                returnValue[1] = 0;
+            }
+        }
+        else if(matrix[5][0][2] == 'Y'){
+            if(matrix[0][2][2] == 'O' && matrix[1][2][0] == 'G'){
+                returnValue[0] = 0;
+                returnValue[1] = 2;
+            }
+            else if(matrix[0][2][2] == 'G' || matrix[1][2][0] == 'O'){
+                returnValue[0] = 0;
+                returnValue[1] = 2;
+            }
+        } else if (matrix[5][0][2] == 'O' || matrix[5][0][2] == 'G') {
+            if((matrix[0][2][2] == 'Y' || matrix[0][2][2] == 'G' || matrix[0][2][2] == 'O') && (matrix[1][2][0] == 'Y' || matrix[1][2][0] == 'G' || matrix[1][2][0] == 'O')){
+                returnValue[0] = 0;
+                returnValue[1] = 2;
+            }
+        }
+        else if(matrix[5][2][0] == 'Y'){
+            if(matrix[3][2][0] == 'R' && matrix[2][2][2] == 'B'){
+                returnValue[0] = 2;
+                returnValue[1] = 0;
+            }
+            else if(matrix[3][2][0] == 'B' || matrix[2][2][2] == 'R'){
+                returnValue[0] = 2;
+                returnValue[1] = 0;
+            }
+        } else if (matrix[5][2][0] == 'R' || matrix[5][2][0] == 'B') {
+            if((matrix[3][2][0] == 'Y' || matrix[3][2][0] == 'R' || matrix[3][2][0] == 'O') && (matrix[2][2][2] == 'Y' || matrix[2][2][2] == 'R' || matrix[2][2][2] == 'O')){
+                returnValue[0] = 2;
+                returnValue[1] = 0;
+            }
+        }
+        else if(matrix[5][2][2] == 'Y'){
+            if(matrix[3][2][0] == 'R' && matrix[2][2][2] == 'G'){
+                returnValue[0] = 2;
+                returnValue[1] = 2;
+            }
+            else if(matrix[3][2][0] == 'G' || matrix[2][2][2] == 'R'){
+                returnValue[0] = 2;
+                returnValue[1] = 2;
+            }
+        } else if (matrix[5][2][2] == 'R' || matrix[5][2][2] == 'G') {
+            if((matrix[3][2][0] == 'Y' || matrix[3][2][0] == 'R' || matrix[3][2][0] == 'G') && (matrix[2][2][2] == 'Y' || matrix[2][2][2] == 'R' || matrix[2][2][2] == 'G' )){
+                returnValue[0] = 2;
+                returnValue[1] = 2;
+            }
+        }
+
+        return returnValue;
+    }
+
+    public static void orientCorners(){
+
+    }
+
 }
