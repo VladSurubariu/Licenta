@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/offwhite"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/info2"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info"
+        android:layout_alignStart="@+id/help_titlu"
+        android:layout_alignEnd="@+id/help_titlu"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="1dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="La rezolvarea cubului Rubik vor fi afișate rândurile, coloanele sau fețele care trebuie mutate, iar o săgeată vă va arată direcția mutării."
+        android:textColor="@color/darkblue"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/help_titlu"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="15sp"
+        android:fontFamily="@font/bangers_regular"
+        android:text="Ajutor"
+        android:textAlignment="center"
+        android:textColor="@color/darkblue"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/help_titlu"
+        android:layout_alignStart="@+id/help_titlu"
+        android:layout_alignEnd="@+id/help_titlu"
+        android:layout_marginTop="30sp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Pentru scanarea cubului Rubik trebuie să începeți cu fața portocalie. De asemenea, fața albă trebuie să fie cea superioară și cea galbenă cea inferioară."
+        android:textColor="@color/darkblue"
+        android:textSize="20sp" />
+
+</RelativeLayout>

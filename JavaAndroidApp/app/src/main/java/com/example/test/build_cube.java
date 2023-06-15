@@ -15,7 +15,7 @@ public class build_cube extends AppCompatActivity {
 
     public Button buttonScan, buttonSolve;
     public ImageView[][][] matrix_imageviews = new ImageView[6][3][3];
-    public char matrix[][][] = new char[6][3][3];
+    public static char matrix[][][] = new char[6][3][3];
     int face_id = 0;
 
     @Override
@@ -28,13 +28,19 @@ public class build_cube extends AppCompatActivity {
 
         populateMatrixImageView();
 
-        buttonSolve.setClickable(false);
-
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent switchIntent = new Intent(v.getContext(), CameraActivity.class);
                 startActivityForResult(switchIntent, 1000);
+            }
+        });
+
+        buttonSolve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent switchIntent = new Intent(v.getContext(), interpret_results.class);
+                startActivityForResult(switchIntent, 1001);
             }
         });
     }
@@ -68,9 +74,6 @@ public class build_cube extends AppCompatActivity {
                 }
 
                 face_id++;
-                if(face_id == 6){
-                    buttonSolve.setClickable(true);
-                }
             }
         }
     }
