@@ -119,6 +119,20 @@ def main(data, width, height):
                 else:
                     cube_matrix[i][j] = "R"
 
+    img = cv2.circle(img, (a00_center[0], a00_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a01_center[0], a01_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a02_center[0], a02_center[1]), 5, (0, 0, 0), 2)
+
+    ## second column
+    img = cv2.circle(img, (a10_center[0], a10_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a11_center[0], a11_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a12_center[0], a12_center[1]), 5, (0, 0, 0), 2)
+
+    # third column
+    img = cv2.circle(img, (a20_center[0], a20_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a21_center[0], a21_center[1]), 5, (0, 0, 0), 2)
+    img = cv2.circle(img, (a22_center[0], a22_center[1]), 5, (0, 0, 0), 2)
+
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     pil_im = Image.fromarray(img_rgb)
 

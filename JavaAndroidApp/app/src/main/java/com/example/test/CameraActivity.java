@@ -190,7 +190,7 @@ public class CameraActivity extends AppCompatActivity {
 
 
                     int width = bitmap.getWidth();
-                    int height = bitmap.getHeight() - camera_height_pixels - 150;
+                    int height = bitmap.getHeight() - 3*camera_height_pixels;
 
                     String image_string = getStringImage(bitmap);
 

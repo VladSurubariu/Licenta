@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".build_cube">
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder53"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder50"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder50" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder52"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder49"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder49" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder51"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder48"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder48" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder50"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder47"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder47" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder49"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder46"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder46" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder48"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder45"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder45" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder47"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder8"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder8" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder46"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder7"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder7" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder45"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder6"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder6" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder44"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder43"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder43" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder43"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder42"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder42" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder41"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder40"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder40" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder40"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder39"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder39" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder38"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder37"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder37" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder37"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder36"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder36" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder36"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="-60sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder0"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder39"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="-40sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder0"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder42"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="-20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder0"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder35"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder32"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder32" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder34"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder31"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder31" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder33"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder30"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder30" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder32"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder29"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder29" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder31"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder28"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder28" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder30"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder27"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder27" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder27"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="-20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder28"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder28" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder28"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="-20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder29"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder29" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder29"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="-20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder0"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder26"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder25"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder25" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder25"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder24"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder24" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder24"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder21"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder21" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder23"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder22"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder22" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder22"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder21"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder21" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder21"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder18"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder18" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder20"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder19"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder19" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder19"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder18"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder18" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder18"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder11"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder11" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder17"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder16"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder16" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder16"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder15"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder15" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder15"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder12"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder12" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder14"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder13"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder13" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder13"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder12"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder12" />
+
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder12"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder9"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder9" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder9"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder2"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder2" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder10"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder9"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder9" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder11"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder10"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder10" />
+
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder8"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginLeft="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder5"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder3" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder7"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginLeft="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder4"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder3" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder6"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginLeft="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder3"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder3" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder5"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginLeft="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder2"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder4"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginLeft="0sp"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder1"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder3"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder0"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder2"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder1"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder1" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder1"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="0sp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@id/top_right_tile_placeholder0"
+        app:layout_constraintTop_toTopOf="@id/top_right_tile_placeholder0" />
+
+    <Button
+        android:id="@+id/buttonSolve"
+        android:layout_width="156dp"
+        android:layout_height="61dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circular_button"
+        android:fontFamily="@font/bangers_regular"
+        android:scaleType="centerCrop"
+        android:text="Rezolvă"
+        android:textAlignment="center"
+        android:textColor="@color/offwhite"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.625" />
+
+    <Button
+        android:id="@+id/buttonScan"
+        android:layout_width="156dp"
+        android:layout_height="61dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circular_button"
+        android:fontFamily="@font/bangers_regular"
+        android:scaleType="centerCrop"
+        android:text="Scanează"
+        android:textAlignment="center"
+        android:textColor="@color/offwhite"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/top_right_tile_placeholder0"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/tile_gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
